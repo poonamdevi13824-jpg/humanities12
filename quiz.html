@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Humanities Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=20261011" />
+    <style>
+      :root { --sat-teal: #087e79; --sat-coral: #e66f58; --sat-ink: #17333b; --sat-mint: #e9f5f2; }
+      body { margin: 0; font-family: "Inter", sans-serif; background: #f4f7fb; color: #0f172a; }
+      .quiz-shell { width: min(1100px, calc(100% - 32px)); margin: 40px auto 60px; }
+      .panel { background: rgba(255,255,255,0.85); border: 1px solid rgba(148,163,184,0.22); border-radius: 20px; padding: 22px; box-shadow: 0 16px 40px rgba(15,23,42,0.08); }
+      .quiz-top { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+      .quiz-controls { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 14px; margin-top: 20px; }
+      label { display: flex; flex-direction: column; gap: 8px; color: #64748b; font-weight: 600; }
+      select, input { padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(148,163,184,0.25); background: white; }
+      .quiz-controls > label { min-width: 0; }
+      .quiz-controls select, .quiz-controls input { width: 100%; min-width: 0; max-width: 100%; }
+      .quiz-area { margin-top: 22px; }
+      .level-meta { display: flex; justify-content: space-between; color: #475569; margin-bottom: 14px; }
+      .question-card { background: #f8fbff; border: 1px solid rgba(148,163,184,0.22); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+      .question-card h3 { margin-top: 0; font-size: 1.3rem; }
+      .option-list { display: grid; gap: 10px; margin-top: 14px; }
+      .option-item { display: flex; gap: 10px; align-items: center; background: white; border: 1px solid rgba(148,163,184,0.18); border-radius: 12px; padding: 12px 14px; }
+      .option-item input { accent-color: #2563eb; }
+      .nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+      .result-box { display: none; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 14px; padding: 18px; margin-top: 20px; }
+      .result-box.show { display: block; }
+      .quiz-game { display: grid; grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.35fr); gap: 28px; align-items: start; margin-top: 20px; }
+      .sat-column { min-width: 0; }
+      .sat-label { margin: 0; color: var(--sat-teal); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; }
+      .sat-title { margin: 5px 0 0; color: var(--sat-ink); font-size: 1.45rem; }
+      .sat-canvas-host { width: 100%; height: 300px; overflow: hidden; }
+      .sat-canvas-host canvas { display: block; width: 100%; height: 100%; }
+      .sat-dialogue { padding: 14px 16px; border-left: 4px solid var(--sat-teal); border-radius: 0 8px 8px 0; background: var(--sat-mint); }
+      .sat-dialogue p { margin: 5px 0 0; color: var(--sat-ink); line-height: 1.55; }
+      .sat-tools { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
+      .sat-tools button, .voice-toggle, .translation-toggle { border: 1px solid rgba(8,126,121,0.25); border-radius: 8px; padding: 9px 12px; background: #fff; color: var(--sat-teal); font-weight: 700; cursor: pointer; }
+      .translation-toggle[aria-pressed="true"] { background: var(--sat-mint); border-color: var(--sat-teal); }
+      .sat-tools { flex-wrap: wrap; }
+      .game-main { min-width: 0; }
+      .game-progress { display: flex; justify-content: space-between; gap: 12px; color: #586b72; font-size: 0.9rem; font-weight: 700; }
+      .question-pool-note { margin: 7px 0 0; color: #65767c; font-size: 0.82rem; line-height: 1.45; }
+      .progress-track { height: 7px; overflow: hidden; margin: 10px 0 22px; border-radius: 99px; background: #e4eeec; }
+      .progress-fill { height: 100%; border-radius: inherit; background: var(--sat-teal); transition: width 220ms ease; }
+      .game-question { margin: 0 0 16px; color: var(--sat-ink); font-size: 1.32rem; line-height: 1.45; }
+      .game-options { display: grid; gap: 10px; }
+      .game-option { display: flex; align-items: flex-start; gap: 12px; width: 100%; min-height: 54px; padding: 14px; border: 1px solid rgba(148,163,184,0.28); border-radius: 10px; background: #fff; color: #243940; text-align: left; line-height: 1.45; cursor: pointer; }
+      .game-option:hover, .game-option:focus-visible { border-color: var(--sat-teal); outline: 2px solid rgba(8,126,121,0.16); }
+      .game-option.selected { border-color: var(--sat-teal); background: var(--sat-mint); }
+      .game-option.correct { border-color: #27804e; background: #eaf7ee; }
+      .game-option.incorrect { border-color: var(--sat-coral); background: #fff0ec; }
+      .option-letter { flex: 0 0 26px; display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: #edf2f1; color: var(--sat-ink); font-size: 0.8rem; font-weight: 800; }
+      .game-feedback { min-height: 48px; margin: 14px 0 0; color: #475d64; line-height: 1.55; }
+      .game-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 12px; }
+      .game-actions button { min-height: 42px; }
+      .primary-game-btn { border: 0; border-radius: 9px; padding: 11px 16px; background: var(--sat-teal); color: #fff; font-weight: 800; cursor: pointer; }
+      .primary-game-btn:disabled { opacity: 0.48; cursor: not-allowed; }
+      .scorecard { margin-top: 18px; padding: 20px; border-left: 4px solid var(--sat-coral); background: #fff5ef; }
+      .scorecard h3 { margin: 0 0 6px; color: var(--sat-ink); }
+      .scorecard p { line-height: 1.55; }
+      .sat-start-note { color: #61747a; font-size: 0.9rem; }
+      @media (max-width: 760px) { .quiz-controls { grid-template-columns: 1fr; } }
+      @media (max-width: 760px) { .quiz-game { grid-template-columns: 1fr; gap: 12px; } .sat-canvas-host { height: 230px; } .game-question { font-size: 1.15rem; } }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-shell">
+      <div class="panel">
+        <div class="quiz-top">
+          <div>
+            <p class="eyebrow">Quiz mode</p>
+            <h1>Chapter challenge</h1>
+          </div>
+          <a class="secondary-btn" href="index.html">Back to library</a>
+        </div>
+
+        <div class="quiz-controls">
+          <label>
+            <span>Subject</span>
+            <select id="subjectSelect"></select>
+          </label>
+          <label>
+            <span>Book / Part</span>
+            <select id="bookSelect"></select>
+          </label>
+          <label>
+            <span>Chapter</span>
+            <select id="chapterSelect"></select>
+          </label>
+          <label>
+            <span>Mode</span>
+            <select id="modeSelect">
+              <option value="easy">Easy</option>
+              <option value="moderate">Moderate</option>
+              <option value="hard">Hard</option>
+            </select>
+          </label>
+          <label>
+            <span>Search</span>
+            <input id="chapterSearch" type="search" placeholder="Type chapter name" />
+          </label>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="ghost-btn" id="startQuizBtn" type="button">Start Quiz</button>
+          <button class="ghost-btn" id="resetQuizBtn" type="button">Reset</button>
+        </div>
+
+        <div id="quizArea" class="quiz-area"></div>
+      </div>
+    </div>
+
+    <script type="importmap">
+      { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+    </script>
+    <script src="subject-data.js?v=20261011"></script>
+    <script src="history-questions.js?v=20261011"></script>
+    <script src="chapter-questions.js?v=20261011"></script>
+      <script src="quiz.js?v=20261016"></script>
+    <script type="module" src="sat-avatar.js?v=20261014"></script>
+  </body>
+</html>

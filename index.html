@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="CiRd9I6cgoBS4RTFbP-DKDucyhzN3W1mIQlgokAg-4g" />
+    <title>NCERT Humanities Study Hub</title>
+    <meta
+      name="description"
+      content="Subject-based humanities study portal with notes, textbook access, quiz levels, and previous-year exam practice."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css?v=20261007-refinish" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">N</span>
+        <span>NCERT Study Hub</span>
+      </div>
+
+      <nav class="nav">
+        <a href="#subjects">Subjects</a>
+        <a href="#bookshelf">Books</a>
+        <a href="#study-panel">Study Panel</a>
+        <a href="#quiz-link">Quiz</a>
+      </nav>
+
+      <a class="cta" href="#subjects">Explore Subjects</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Humanities Class 12</p>
+          <h1>Smart learning for every chapter and every exam.</h1>
+          <p class="hero-text">
+            Search by subject, choose chapter notes, open textbook PDFs, practice board-style questions,
+            and take quiz levels from easy to hard.
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary-btn" href="#subjects">Browse subjects</a>
+            <a class="secondary-btn" href="quiz.html">Open quiz mode</a>
+          </div>
+
+          <div class="stats">
+            <div>
+              <strong>7</strong>
+              <span>Subject libraries</span>
+            </div>
+            <div>
+              <strong>10</strong>
+              <span>Quiz levels</span>
+            </div>
+            <div>
+              <strong>4+</strong>
+              <span>Study modes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="book-stack">
+            <div class="stack-book history">History</div>
+            <div class="stack-book geography">Geography</div>
+            <div class="stack-book polity">Political Science</div>
+          </div>
+
+          <div class="quote-card">
+            <p>“A good revision plan is just a clear chapter path with questions that keep rising in level.”</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="subjects" class="search-wrapper">
+        <div class="search-box full-width">
+          <span>Search subject or chapter</span>
+          <input id="subjectSearch" type="search" placeholder="Type history, economics, nationalism, polity..." />
+        </div>
+        <ul id="suggestions" class="suggestions"></ul>
+      </section>
+
+      <section id="flashcards" class="subjects-grid"></section>
+
+      <section id="bookshelf" class="book-shelf-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Original textbooks</p>
+            <h2>Bookshelf</h2>
+          </div>
+        </div>
+        <div id="bookShelfGrid" class="book-shelf-grid"></div>
+      </section>
+
+      <section id="study-panel" class="study-panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Study workspace</p>
+            <h2 id="selectedSubjectTitle">Select a subject</h2>
+          </div>
+          <button id="resetSubject" class="ghost-btn" type="button">Reset</button>
+        </div>
+
+        <div class="mode-tabs">
+          <button class="mode-btn active" data-mode="notes" type="button">Notes</button>
+          <button class="mode-btn" data-mode="textbook" type="button">Textbook</button>
+          <button class="mode-btn" data-mode="quiz" type="button">Quiz</button>
+          <button class="mode-btn" data-mode="pyq" type="button">Previous Year Qs</button>
+        </div>
+
+        <div class="study-controls">
+          <label>
+            <span>Book / Part</span>
+            <select id="bookSelect"></select>
+          </label>
+
+          <label>
+            <span>Chapter</span>
+            <input id="chapterSearch" type="search" list="chapterSuggestions" placeholder="Enter the exact chapter title from your book" autocomplete="off" />
+            <datalist id="chapterSuggestions"></datalist>
+            <small id="chapterHint" class="field-hint">Select the book/part, then type the chapter name exactly as printed. Current suggestions are interim until you provide the PDFs.</small>
+          </label>
+        </div>
+
+        <div id="contentArea" class="content-area"></div>
+      </section>
+
+      <section id="quiz-link" class="quick-actions">
+        <div class="quick-box">
+          <h3>Quiz playground</h3>
+          <p>Choose the subject, chapter, mode, and level. Each mode has 10 levels with rising difficulty.</p>
+          <a class="primary-btn" href="quiz.html">Start challenge</a>
+        </div>
+        <div class="quick-box">
+          <h3>Study by chapter</h3>
+          <p>Use smart suggestions for chapter names and board exam patterns while revising.</p>
+          <a class="secondary-btn" href="#subjects">Search now</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="subject-data.js?v=20261010"></script>
+    <script src="history-questions.js?v=20261008"></script>
+    <script src="chapter-questions.js?v=20261010"></script>
+    <script src="app.js?v=20261008"></script>
+  </body>
+</html>

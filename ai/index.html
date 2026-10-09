@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VisionAI — AI Video Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <span>Vision<span class="purple">AI</span></span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#create">Create</a>
+            <a href="#projects">My Projects</a>
+            <a href="#pricing">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+            <button class="credits-btn">
+                ⚡ 20 Credits
+            </button>
+
+            <button class="login-btn">
+                Sign In
+            </button>
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero" id="create">
+
+            <div class="hero-background"></div>
+
+            <div class="hero-content">
+
+                <div class="badge">
+                    <span>✦</span>
+                    AI VIDEO GENERATOR
+                </div>
+
+                <h1>
+                    Turn your ideas into
+                    <span>stunning videos.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Describe what you want to see. Our AI transforms
+                    your idea into a ready-to-use video.
+                </p>
+
+
+                <!-- ================= CREATOR ================= -->
+
+                <div class="creator-card">
+
+                    <div class="creator-header">
+
+                        <div>
+                            <h2>Create a video</h2>
+
+                            <p>
+                                Tell the AI exactly what you want.
+                            </p>
+                        </div>
+
+                        <div class="ai-status">
+                            <span class="status-dot"></span>
+                            AI Ready
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROMPT -->
+
+                    <div class="prompt-section">
+
+                        <label for="prompt">
+                            Video description
+                        </label>
+
+                        <textarea
+                            id="prompt"
+                            maxlength="1000"
+                            placeholder="Example: Create a cinematic 30-second video showing a futuristic Delhi in 2050, with flying cars, glowing buildings, busy streets and dramatic camera movements..."
+                        ></textarea>
+
+                        <div class="prompt-bottom">
+
+                            <span id="characterCount">
+                                0 / 1000
+                            </span>
+
+                            <button
+                                class="example-btn"
+                                id="exampleBtn"
+                            >
+                                ✨ Try example
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="options-grid">
+
+                        <div class="input-group">
+
+                            <label for="duration">
+                                Duration
+                            </label>
+
+                            <select id="duration">
+
+                                <option value="5">
+                                    5 seconds
+                                </option>
+
+                                <option value="10">
+                                    10 seconds
+                                </option>
+
+                                <option value="15" selected>
+                                    15 seconds
+                                </option>
+
+                                <option value="30">
+                                    30 seconds
+                                </option>
+
+                                <option value="60">
+                                    60 seconds
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="style">
+                                Visual style
+                            </label>
+
+                            <select id="style">
+
+                                <option value="Cinematic" selected>
+                                    🎬 Cinematic
+                                </option>
+
+                                <option value="Realistic">
+                                    📷 Realistic
+                                </option>
+
+                                <option value="Anime">
+                                    🎨 Anime
+                                </option>
+
+                                <option value="3D Animation">
+                                    🧊 3D Animation
+                                </option>
+
+                                <option value="Cartoon">
+                                    🖍️ Cartoon
+                                </option>
+
+                                <option value="Documentary">
+                                    🎥 Documentary
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="ratio">
+                                Aspect ratio
+                            </label>
+
+                            <select id="ratio">
+
+                                <option value="16:9" selected>
+                                    ▭ 16:9 Landscape
+                                </option>
+
+                                <option value="9:16">
+                                    ▯ 9:16 Portrait
+                                </option>
+
+                                <option value="1:1">
+                                    □ 1:1 Square
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GENERATE -->
+
+                    <button
+                        class="generate-btn"
+                        id="generateBtn"
+                    >
+
+                        <span class="generate-icon">
+                            ✦
+                        </span>
+
+                        Generate Video
+
+                        <span class="credit-cost">
+                            1 credit
+                        </span>
+
+                    </button>
+
+
+                    <p class="secure-text">
+                        🔒 Your prompt is private and secure.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RESULT ================= -->
+
+        <section class="result-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Your video</h2>
+
+                    <p>
+                        Your generated video will appear here.
+                    </p>
+                </div>
+
+                <button
+                    class="clear-btn"
+                    id="clearBtn"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div
+                class="video-card"
+                id="videoCard"
+            >
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    class="empty-state"
+                    id="emptyState"
+                >
+
+                    <div class="empty-icon">
+                        🎬
+                    </div>
+
+                    <h3>
+                        No video yet
+                    </h3>
+
+                    <p>
+                        Describe your idea above and click
+                        <strong>Generate Video</strong>.
+                    </p>
+
+                </div>
+
+
+                <!-- LOADING STATE -->
+
+                <div
+                    class="loading-state hidden"
+                    id="loadingState"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <h3>
+                        Creating your video...
+                    </h3>
+
+                    <p id="loadingText">
+                        Understanding your idea...
+                    </p>
+
+                    <div class="progress-container">
+
+                        <div
+                            class="progress-bar"
+                            id="progressBar"
+                        ></div>
+
+                    </div>
+
+                    <span
+                        class="progress-number"
+                        id="progressNumber"
+                    >
+                        0%
+                    </span>
+
+                </div>
+
+
+                <!-- VIDEO RESULT -->
+
+                <div
+                    class="video-result hidden"
+                    id="videoResult"
+                >
+
+                    <div class="fake-video">
+
+                        <div class="fake-video-content">
+
+                            <div class="play-button">
+                                ▶
+                            </div>
+
+                            <p>
+                                AI VIDEO PREVIEW
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="result-actions">
+
+                        <button
+                            class="download-btn"
+                            id="downloadBtn"
+                        >
+                            ↓ Download Video
+                        </button>
+
+                        <button
+                            class="secondary-btn"
+                            id="newVideoBtn"
+                        >
+                            + Create Another
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- VIDEO DETAILS -->
+
+            <div
+                class="video-details hidden"
+                id="videoDetails"
+            >
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <strong id="detailStatus">
+                        Completed
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Duration
+                    </span>
+
+                    <strong id="detailDuration">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Style
+                    </span>
+
+                    <strong id="detailStyle">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Ratio
+                    </span>
+
+                    <strong id="detailRatio">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section class="features-section">
+
+            <div class="section-title">
+
+                <span class="small-label">
+                    POWERED BY AI
+                </span>
+
+                <h2>
+                    Everything you need to create.
+                </h2>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ✦
+                    </div>
+
+                    <h3>
+                        Text to Video
+                    </h3>
+
+                    <p>
+                        Turn a simple description into
+                        a complete visual scene.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        Multiple Styles
+                    </h3>
+
+                    <p>
+                        Choose cinematic, realistic,
+                        anime, 3D and more.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Fast Generation
+                    </h3>
+
+                    <p>
+                        Our AI handles the difficult
+                        work so you don't have to.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROJECTS ================= -->
+
+        <section
+            class="projects-section"
+            id="projects"
+        >
+
+            <div class="section-title">
+
+                <span class="small-label">
+                    YOUR WORK
+                </span>
+
+                <h2>
+                    Recent projects
+                </h2>
+
+            </div>
+
+
+            <div class="projects-grid">
+
+                <div class="project-card">
+
+                    <div class="project-thumbnail thumbnail-one">
+                        🌆
+                    </div>
+
+                    <div class="project-info">
+
+                        <h3>
+                            Future Delhi
+                        </h3>
+
+                        <p>
+                            Cinematic · 15 sec
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <div class="project-thumbnail thumbnail-two">
+                        🚀
+                    </div>
+
+                    <div class="project-info">
+
+                        <h3>
+                            Space Journey
+                        </h3>
+
+                        <p>
+                            Realistic · 30 sec
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-card">
+
+                    <div class="project-thumbnail thumbnail-three">
+                        🐉
+                    </div>
+
+                    <div class="project-info">
+
+                        <h3>
+                            Fantasy World
+                        </h3>
+
+                        <p>
+                            3D Animation · 15 sec
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+            ✦ Vision<span class="purple">AI</span>
+        </div>
+
+        <p>
+            Create. Imagine. Generate.
+        </p>
+
+        <span>
+            © 2026 VisionAI
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
